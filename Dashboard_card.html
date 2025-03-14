@@ -1,0 +1,23 @@
+<!-- index.html snippet -->
+<div id="dashboard-card" class="card">
+  <h2>Threat Alerts</h2>
+  <ul id="alert-list"></ul>
+</div>
+
+<script>
+  // Fetch threat alerts from backend API and update the card
+  async function loadThreatAlerts() {
+    try {
+      const response = await fetch('https://your-backend-api.com/api/threat-alerts');
+      const data = await response.json();
+      const alertList = document.getElementById('alert-list');
+      alertList.innerHTML = data.alerts.map(alert => `<li>${alert.message} - ${alert.severity}</li>`).join('');
+    } catch (error) {
+      console.error("Error loading threat alerts:", error);
+    }
+  }
+
+  // Update every 30 seconds
+  loadThreatAlerts();
+  setInterval(loadThreatAlerts, 30000);
+</script>
